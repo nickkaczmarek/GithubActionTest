@@ -12,8 +12,7 @@ jobs:
     outputs:
       bump_level: ${{ steps.step1.outputs.bump_level }}
     steps:
-      - uses: actions/checkout@v2
-        id: step1
+      - id: step1
         run: echo "doing something" && level=$(gh pr view PR_NUMBER --json labels --jq '.labels[].name') && echo "::set-output name=bump_level::$level"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
