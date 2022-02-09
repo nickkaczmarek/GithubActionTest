@@ -9,7 +9,7 @@ on:
 jobs:
   version_bump:
     runs-on: ubuntu-latest
-    if: ${{ github.repository == 'wwt/GithubActionTest' && github.event.pull_request.merged == true }}
+    if: ${{ github.event.pull_request.merged == true }}
     env:
       working-directory: .github
     steps:
