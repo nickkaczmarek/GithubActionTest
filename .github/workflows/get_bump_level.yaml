@@ -1,0 +1,23 @@
+name: Get Bump Level
+
+on:
+  workflow_dispatch:
+    push:
+      branches: [main]
+
+jobs:
+  get_bump_level:
+    runs-on: ubuntu-latest
+    outputs:
+      bump_level: ${{ steps.step1.outputs.bump_level }}
+    steps:
+      - id: step1
+        run: level=$(gh pr view PR_NUMBER --json labels --jq '.labels[].name') && echo "::set-output name=bump_level::$level"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+  print_bump_level:
+    runs-on: ubuntu-latest
+    needs: get_bump_level
+    steps:
+      - run: echo ${{needs.get_bump_level.outputs.bump_level}}
