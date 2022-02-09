@@ -8,7 +8,7 @@ on:
 
 jobs:
   get_bump_level:
-    if: github.event.pull_request.merged == true
+    if: ${{ github.event.pull_request.merged == true }}
     runs-on: ubuntu-latest
     outputs:
       bump_level: ${{ steps.step1.outputs.bump_level }}
