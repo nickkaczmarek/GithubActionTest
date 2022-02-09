@@ -1,20 +1,20 @@
 name: Get Bump Level
 
 on:
-  workflow_dispatch:
-    pull_request:
-      branches: [main]
-      types: [closed]
+  pull_request:
+    branches: [main]
+    types: [closed]
 
 jobs:
   get_bump_level:
-    if: ${{ github.event.pull_request.merged == true }}
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     outputs:
       bump_level: ${{ steps.step1.outputs.bump_level }}
     steps:
-      - id: step1
-        run: level=$(gh pr view PR_NUMBER --json labels --jq '.labels[].name') && echo "::set-output name=bump_level::$level"
+      - uses: actions/checkout@v2
+        id: step1
+        run: echo "doing something" && level=$(gh pr view PR_NUMBER --json labels --jq '.labels[].name') && echo "::set-output name=bump_level::$level"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
