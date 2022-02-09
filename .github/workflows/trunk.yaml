@@ -37,3 +37,4 @@ jobs:
           token: ${{ secrets.RELEASE_PAT }}
           name: Release ${{ steps.tag_version.outputs.new_tag }}
           body: ${{steps.build_changelog.outputs.changelog}}
+          draft: true
