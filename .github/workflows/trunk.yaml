@@ -35,4 +35,3 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           name: Release ${{ steps.tag_version.outputs.new_tag }}
           body: ${{steps.build_changelog.outputs.changelog}}
-          draft: true
