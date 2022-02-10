@@ -13,10 +13,15 @@ jobs:
       bump_level: ${{ steps.step1.outputs.bump_level }}
     steps:
       - id: step1
-        run: echo "doing something" && level=$(gh pr view PR_NUMBER --json labels --jq '.labels[].name') && echo "::set-output name=bump_level::$level"
+        run: |
+          echo "doing something"
+          level=$(gh pr -R REPO view PR_NUMBER --json labels --jq '.labels[].name')
+          echo "::set-output name=bump_level::$level"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
   print_bump_level:
     runs-on: ubuntu-latest
     needs: get_bump_level
