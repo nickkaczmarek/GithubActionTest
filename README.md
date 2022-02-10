@@ -16,3 +16,4 @@
 ## testing another pr but with another label
 ## testing another pr but with a minor label
 ## one more
+## testing what happens if I require a label for bumping but don't provide one
