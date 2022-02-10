@@ -19,7 +19,7 @@ jobs:
                         --jq '.labels[]
                               | select(.name == "minor" or .name == "major" or .name == "patch")
                               | .name')
-          if [[ ! -z $BUMP_LEVEL ]]; then
+          if [[ -z $BUMP_LEVEL ]]; then
               echo "no bump to report."
               exit 1
           else
@@ -32,7 +32,7 @@ jobs:
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
   version_bump:
-    if: ${{ success() }}
+    if: ${{ success() }} #[[ ! -z ${{ needs.get_bump_level.outputs.bump_level }} ]]
     runs-on: ubuntu-latest
     needs: get_bump_level
     env:
