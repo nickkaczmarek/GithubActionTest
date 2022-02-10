@@ -21,6 +21,7 @@ jobs:
                               | .name')
           if [[ ! -z $BUMP_LEVEL ]]; then
               echo "no bump to report"
+              echo "::error title=Missing Label::No bump label provided."
           else
               echo "bumping to $BUMP_LEVEL"
               echo "::set-output name=bump_level::$BUMP_LEVEL"
