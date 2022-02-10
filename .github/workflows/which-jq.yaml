@@ -1,0 +1,12 @@
+name: Which jq
+
+on:
+  push:
+    branches: [main]
+jobs:
+  which_jq:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Which jq
+        run: |
+          echo "$(which jq)"
