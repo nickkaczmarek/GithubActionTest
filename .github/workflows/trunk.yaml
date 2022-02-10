@@ -31,7 +31,7 @@ jobs:
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
   version_bump:
-    if: ${{ needs.get_bump_level.outputs.bump_level != "" }}
+    if: ${{ success() }}
     runs-on: ubuntu-latest
     needs: get_bump_level
     env:
