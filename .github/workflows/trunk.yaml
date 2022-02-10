@@ -19,12 +19,13 @@ jobs:
                         --jq '.labels[]
                               | select(.name== "minor" or .name == "major")
                               | .name')
-
+          echo $BUMP_LEVEL
           if [[ $BUMP_LEVEL -eq "minor" || $BUMP_LEVEL -eq "major" ]]; then
               echo "you're good"
           else
               BUMP_LEVEL=patch
           fi
+          echo $BUMP_LEVEL
           echo "::set-output name=bump_level::$BUMP_LEVEL"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
