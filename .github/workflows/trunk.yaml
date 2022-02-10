@@ -26,11 +26,23 @@ jobs:
       PR_NUMBER: ${{ github.event.pull_request.number }}
     steps:
       - uses: actions/checkout@v2
+      - id: step1
+        run: |
+          echo "doing something"
+          level=$(gh pr -R $OWNER/$REPO view $PR_NUMBER --json labels --jq '.labels[].name')
+          echo "::set-output name=bump_level::$level"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
       - name: Bump version and push tag
+        needs: get_bump_level
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          default_bump: ${{needs.get_bump_level.outputs.bump_level}}
       - name: Build Changelog
         id: build_changelog
         uses: mikepenz/release-changelog-builder-action@v1.7.3
