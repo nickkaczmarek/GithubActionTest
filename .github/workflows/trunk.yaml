@@ -17,21 +17,21 @@ jobs:
                         -R $OWNER/$REPO view $PR_NUMBER \
                         --json labels \
                         --jq '.labels[]
-                              | select(.name== "minor" or .name == "major")
+                              | select(.name == "minor" or .name == "major" or .name == "patch")
                               | .name')
-          if [[ ! -z $BUMP_LEVEL && ( $BUMP_LEVEL -eq "minor" || $BUMP_LEVEL -eq "major" ) ]]; then
-              echo "you're good"
+          if [[ ! -z $BUMP_LEVEL ]]; then
+              echo "no bump to report"
           else
-              BUMP_LEVEL=patch
+              echo "bumping to $BUMP_LEVEL"
+              echo "::set-output name=bump_level::$BUMP_LEVEL"
           fi
-          echo "::set-output name=bump_level::$BUMP_LEVEL"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
   version_bump:
-    if: ${{ github.event.pull_request.merged == true }}
+    if: ${{ ! -z needs.get_bump_level.outputs.bump_level }}
     runs-on: ubuntu-latest
     needs: get_bump_level
     env:
