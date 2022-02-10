@@ -22,3 +22,4 @@
 ## 4
 ## 5
 ## failing script with error
+## simpler script
