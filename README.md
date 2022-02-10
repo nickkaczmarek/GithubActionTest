@@ -21,3 +21,4 @@
 ## maybe the require bump will work now.
 ## 4
 ## 5
+## failing script with error
