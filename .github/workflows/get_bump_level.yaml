@@ -15,7 +15,12 @@ jobs:
       - id: step1
         run: |
           echo "doing something"
-          level=$(gh pr -R $OWNER/$REPO view $PR_NUMBER --json labels --jq '.labels[].name')
+          level=$(gh pr \
+                    -R $OWNER/$REPO view $PR_NUMBER \
+                    --json labels \
+                    --jq '.labels[]
+                          | select(.name== "minor" or .name == "major")
+                          | .name')
           echo "::set-output name=bump_level::$level"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

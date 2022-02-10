@@ -1,12 +1,9 @@
 name: Version Bump
 
 on:
-  workflow_dispatch:
   pull_request:
    branches: [main]
    types: [closed]
-#  push:
-#    branches: [main]
 jobs:
   get_bump_level:
     if: github.event.pull_request.merged == true
@@ -16,7 +13,18 @@ jobs:
     steps:
       - id: step1
         run: |
-          BUMP_LEVEL=$(gh pr -R $OWNER/$REPO view $PR_NUMBER --json labels --jq '.labels[].name')
+          BUMP_LEVEL=$(gh pr \
+                        -R $OWNER/$REPO view $PR_NUMBER \
+                        --json labels \
+                        --jq '.labels[]
+                              | select(.name== "minor" or .name == "major")
+                              | .name')
+
+          if [[ $BUMP_LEVEL -eq "minor" || $BUMP_LEVEL -eq "major" ]]; then
+              echo "you're good"
+          else
+              BUMP_LEVEL=patch
+          fi
           echo "::set-output name=bump_level::$BUMP_LEVEL"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
