@@ -2,11 +2,12 @@ name: Minor Version Bump
 
 on:
   pull_request:
-   branches: [main]
-   types: [closed]
+    branches: [main]
+    types: [closed]
+    labeled: ["minor"]
 jobs:
   version_bump:
-    if: ${{ github.event.pull_request.merged == true && github.event.label.name == 'minor' }}
+    if: ${{ github.event.pull_request.merged == true }}
     runs-on: ubuntu-latest
     env:
       working-directory: .github

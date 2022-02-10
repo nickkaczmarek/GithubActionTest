@@ -2,11 +2,12 @@ name: Major Version Bump
 
 on:
   pull_request:
-   branches: [main]
-   types: [closed]
+    branches: [main]
+    types: [closed]
+    labeled: ["major"]
 jobs:
   version_bump:
-    if: ${{ github.event.pull_request.merged == true && github.event.label.name == 'major' }}
+    if: ${{ github.event.pull_request.merged == true }}
     runs-on: ubuntu-latest
     env:
       working-directory: .github
