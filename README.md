@@ -30,3 +30,4 @@
 ## trying with a patch label again
 ## back to scripting
 ## bash styling exiting
+## if I don't pass a label, will the first job fail and stop the next?
