@@ -20,7 +20,8 @@ jobs:
                               | select(.name == "minor" or .name == "major" or .name == "patch")
                               | .name')
           if [[ ! -z $BUMP_LEVEL ]]; then
-              core.setFailed("no bump to report")
+              echo "no bump to report."
+              exit 1
           else
               echo "bumping to $BUMP_LEVEL"
               echo "::set-output name=bump_level::$BUMP_LEVEL"
