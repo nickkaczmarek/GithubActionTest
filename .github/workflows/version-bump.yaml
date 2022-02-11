@@ -45,8 +45,6 @@ jobs:
       working-directory: .github
     steps:
       - uses: actions/checkout@v2
-      - name: Print env
-        run: echo ${{ needs.get_bump_level.outputs.bump_level }}
       - name: Bump version and push tag
         if: needs.get_bump_level.outputs.bump_level != 'false'
         id: tag_version
