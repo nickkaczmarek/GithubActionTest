@@ -15,16 +15,23 @@ jobs:
         run: |
           BUMP_LEVEL=$(gh pr \
                         -R $OWNER/$REPO view $PR_NUMBER \
-                        --json labels \
-                        --jq '.labels[]
-                              | select(.name == "minor" or .name == "major" or .name == "patch")
-                              | .name')
-          if [[ -z $BUMP_LEVEL ]]; then
-              echo "no bump to report."
-              exit 1
+                        --json labels)
+          major_level=$(echo $BUMP_LEVEL | jq '.labels[] | select(.name == "major").name')
+          minor_level=$(echo $BUMP_LEVEL | jq '.labels[] | select(.name == "minor").name')
+          patch_level=$(echo $BUMP_LEVEL | jq '.labels[] | select(.name == "patch").name')
+
+          if [[ ! -z $major_level ]]; then
+              echo "it's major"
+              echo "::set-output name=bump_level::major"
+          elif [[ ! -z $minor_level ]]; then
+              echo "it's minor"
+              echo "::set-output name=bump_level::minor"
+          elif [[ ! -z $patch_level ]]; then
+              echo "it's patch"
+              echo "::set-output name=bump_level::patch"
           else
-              echo "bumping to $BUMP_LEVEL"
-              echo "::set-output name=bump_level::$BUMP_LEVEL"
+              echo "no level"
+              exit 1
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
