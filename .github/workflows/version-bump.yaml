@@ -31,6 +31,7 @@ jobs:
               echo "::set-output name=bump_level::patch"
           else
               echo "no level"
+              echo "::set-output name=bump_level::null"
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -44,15 +45,16 @@ jobs:
       working-directory: .github
     steps:
       - uses: actions/checkout@v2
+        if: ${{ needs.get_bump_level.outputs.bump_level != null }}
       - name: Bump version and push tag
-        if: ${{ !needs.get_bump_level.outputs.bump_level }}
+        if: ${{ needs.get_bump_level.outputs.bump_level != null }}
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           default_bump: ${{ needs.get_bump_level.outputs.bump_level }}
       - name: Build Changelog
-        if: ${{ !needs.get_bump_level.outputs.bump_level }}
+        if: ${{ needs.get_bump_level.outputs.bump_level != null }}
         id: build_changelog
         uses: mikepenz/release-changelog-builder-action@v1.7.3
         with:
@@ -61,7 +63,7 @@ jobs:
           toTag: ${{ steps.tag_version.outputs.new_tag }}
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Create a GitHub release
-        if: ${{ !needs.get_bump_level.outputs.bump_level }}
+        if: ${{ needs.get_bump_level.outputs.bump_level != null }}
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.tag_version.outputs.new_tag }}
