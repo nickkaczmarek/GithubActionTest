@@ -9,4 +9,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Validate json with schema
-        run: ls -la
+        run: npx ajv-cli -s workflow-schema.json -d sample.json
