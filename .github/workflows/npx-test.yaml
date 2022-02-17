@@ -21,14 +21,16 @@ jobs:
       - uses: actions/checkout@v2
       - name: Validate json with schema
         run: |
-          npx ajv-cli --spec=draft7 \
+          npx ajv-cli validate \
+                    --spec=draft7 \
                     --strict=log \
                     --allow-union-types \
                     -s workflow-schema.json \
                     -d sample.json
       - name: Validate yaml with schema
         run: |
-          npx ajv-cli --spec=draft7 \
+          npx ajv-cli validate \
+                    --spec=draft7 \
                     --strict=log \
                     --allow-union-types \
                     -s workflow-schema.json \
