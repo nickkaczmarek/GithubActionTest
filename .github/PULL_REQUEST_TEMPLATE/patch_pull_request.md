@@ -1,5 +1,5 @@
 ---
-name: Pull Request
+name: Patch Pull Request
 about: Create a PR to help us improve
 title: ''
 labels: 'patch'
