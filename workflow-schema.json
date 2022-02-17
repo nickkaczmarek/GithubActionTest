@@ -101,7 +101,6 @@
       "title": "The sequence of FlowRepresentables the workflow should contain",
       "minItems": 1,
       "type": "array",
-      "additionalItems": true,
       "items": {
         "$id": "#/properties/sequence/items",
         "anyOf": [
