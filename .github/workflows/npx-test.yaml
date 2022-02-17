@@ -8,4 +8,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Validate json with schema
-        run: npx ajv-cli -s workflow-schema.json -d sample.json
+        run: pwd && ls
