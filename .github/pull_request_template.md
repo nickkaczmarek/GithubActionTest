@@ -1,12 +1,3 @@
----
-name: Patch Pull Request
-about: Create a PR to help us improve
-title: ''
-labels: 'patch'
-assignees: ''
-
----
-
 <!-- All PRs should have some kind of issue backing them. This means the community has had some opportunity to contribute ideas, or that the PR is fixing a problem that is being tracked -->
 ### Linked Issue:
 
