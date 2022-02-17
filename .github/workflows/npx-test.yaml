@@ -1,0 +1,11 @@
+name: npx test
+
+on:
+  push:
+    branches: [main]
+jobs:
+  get_bump_level:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print ajv version
+        run: npx ajv-cli -v
