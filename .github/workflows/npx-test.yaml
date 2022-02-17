@@ -7,5 +7,6 @@ jobs:
   validate_json_with_schema:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Validate json with schema
-        run: ./validator.sh
+        run: ls -la
