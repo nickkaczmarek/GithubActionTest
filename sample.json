@@ -57,7 +57,7 @@
     },
     {
       "flowRepresentableName": "FR4",
-      "launchStyle": "",
+      "launchStyle": "something",
       "flowPersistence": {
         "*": "removedAfterProceeding"
       }
