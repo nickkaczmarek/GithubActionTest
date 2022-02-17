@@ -6,6 +6,7 @@ on:
 jobs:
   validate_json_with_schema:
     runs-on: ubuntu-latest
+    working_directory: "."
     steps:
       - name: Validate json with schema
-        run: npx ajv-cli -s ../../workflow-schema.json -d ../../sample.json
+        run: npx ajv-cli -s workflow-schema.json -d sample.json
